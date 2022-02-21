@@ -22,14 +22,14 @@ class HomePage extends StatelessWidget {
 
   Widget _lista() {
 
-    print(menuProvider.opciones);
-
+    // menuProvider.cargarData()
+    
     return ListView(
 
       children: _listaItems(),
 
     );
-    
+
   }
 
   _listaItems() {
