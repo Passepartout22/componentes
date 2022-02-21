@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:componentes/src/providers/menu_provider.dart';
 import 'package:flutter/material.dart';
 
@@ -23,23 +25,44 @@ class HomePage extends StatelessWidget {
   Widget _lista() {
 
     // menuProvider.cargarData()
-    
-    return ListView(
+    return FutureBuilder(
+      future: menuProvider.cargarData(),
+      initialData: [],
+      builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+       
 
-      children: _listaItems(),
+       print('builder');
+       print(snapshot.data);
+      
+       
+        return ListView(
+         children: _listaItems(snapshot.data!),
+        ); 
 
+      },
     );
 
   }
 
-  _listaItems() {
+  List<Widget> _listaItems(List<dynamic> data ) {
 
-    return [
-      ListTile(
+      final List<Widget> opciones = [];
 
-        title:  Text("Hola Mundo"),
+      data.forEach( (opt) {
 
-      )
-    ];
+          final widgetTemp = ListTile(
+            title: Text(opt['texto']),
+            leading: Icon( Icons.account_circle),
+            trailing: Icon(Icons.keyboard_arrow_right, color: Colors.blue),
+            onTap: () {
+
+            },
+          );
+
+            opciones..add(widgetTemp)
+                ..add(Divider() );
+
+       });
+           return opciones;
   }
 }
